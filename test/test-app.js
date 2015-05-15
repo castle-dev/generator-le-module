@@ -30,4 +30,7 @@ describe('le-module:generator', function () {
   it('creates .travis.yml', function () {
     assert.file(['.travis.yml']);
   });
+  it('creates gulpfile.js', function () {
+    assert.file(['gulpfile.js']);
+  });
 });
