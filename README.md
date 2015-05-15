@@ -1,4 +1,4 @@
-# generator-le-module [![Build Status](https://secure.travis-ci.org/lowe0292/generator-le-module.png?branch=master)](https://travis-ci.org/lowe0292/generator-le-module)
+# generator-le-module [![Build Status](https://secure.travis-ci.org/castle-dev/generator-le-module.png?branch=master)](https://travis-ci.org/castle-dev/generator-le-module)
 
 > [Yeoman](http://yeoman.io) generator
 
