@@ -27,6 +27,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
   },
   writing: function () {
     var writer = this;
+    answers.currentYear = new Date().getFullYear();
     function copyTemplate (from, to) {
       writer.fs.copyTpl(
         writer.templatePath(from),
@@ -36,6 +37,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     };
     copyTemplate('_README.md', 'README.md');
     copyTemplate('_CONTRIBUTING.md', 'CONTRIBUTING.md');
+    copyTemplate('_LICENSE-MIT', 'LICENSE-MIT');
   }
 });
  

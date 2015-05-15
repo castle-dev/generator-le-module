@@ -18,4 +18,7 @@ describe('le-module:app', function () {
   it('creates CONTRIBUTING.md', function () {
     assert.file(['README.md']);
   });
+  it('creates LICENSE-MIT', function () {
+    assert.file(['LICENSE-MIT']);
+  });
 });
