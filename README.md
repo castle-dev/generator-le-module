@@ -8,7 +8,11 @@
 
 ## Usage
 
+Simply run the generator from your new module's folder
+
 ```bash
+  mkdir your-new-module
+  cd your-new-module
   yo le-module
 ```
 
