@@ -18,8 +18,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     }, {
       type    : 'input',
       name    : 'moduleDescription',
-      message : 'Give me a high-level summary of what this module will do.',
-      default : 'Awesome stuff'
+      message : 'Describe what it will do.'
     }, {
       type    : 'input',
       name    : 'repoName',
@@ -52,6 +51,10 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     copyTemplate('src/_index.js', 'src/index.js');
     copyTemplate('test/unit/_index.js', 'test/unit/index.js');
     copyTemplate('test/e2e/_scenario.js', 'test/e2e/scenario.js');
+  },
+  install: function () {
+    this.npmInstall();
+    this.spawnCommand('git', ['init']);
   }
 });
  
