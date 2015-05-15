@@ -1,4 +1,4 @@
-# generator-le-module [![Build Status](https://secure.travis-ci.org/castle-dev/generator-le-module.png?branch=master)](https://travis-ci.org/castle-dev/generator-le-module)
+# generator-le-module [![Build Status](https://secure.travis-ci.org/castle-dev/generator-le-module.png?branch=develop)](https://travis-ci.org/castle-dev/generator-le-module)
 
 > Generates a solid starting point for new node modules
 
