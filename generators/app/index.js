@@ -50,6 +50,8 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     copyTemplate('_.travis.yml', '.travis.yml');
     copyTemplate('_gulpfile.js', 'gulpfile.js');
     copyTemplate('src/_index.js', 'src/index.js');
+    copyTemplate('test/unit/_index.js', 'test/unit/index.js');
+    copyTemplate('test/e2e/_scenario.js', 'test/e2e/scenario.js');
   }
 });
  
