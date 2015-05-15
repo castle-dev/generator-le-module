@@ -5,7 +5,7 @@ var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 var os = require('os');
 
-describe('le-module:app', function () {
+describe('le-module:generator', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ skipInstall: true })
@@ -20,5 +20,14 @@ describe('le-module:app', function () {
   });
   it('creates LICENSE-MIT', function () {
     assert.file(['LICENSE-MIT']);
+  });
+  it('creates package.json', function () {
+    assert.file(['package.json']);
+  });
+  it('creates .gitignore', function () {
+    assert.file(['.gitignore']);
+  });
+  it('creates .travis.yml', function () {
+    assert.file(['.travis.yml']);
   });
 });
