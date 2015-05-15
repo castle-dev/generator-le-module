@@ -49,6 +49,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     copyTemplate('_.gitignore', '.gitignore');
     copyTemplate('_.travis.yml', '.travis.yml');
     copyTemplate('_gulpfile.js', 'gulpfile.js');
+    copyTemplate('src/_index.js', 'src/index.js');
   }
 });
  

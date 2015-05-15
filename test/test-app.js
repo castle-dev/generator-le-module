@@ -33,4 +33,7 @@ describe('le-module:generator', function () {
   it('creates gulpfile.js', function () {
     assert.file(['gulpfile.js']);
   });
+  it('creates index.js', function () {
+    assert.file(['src/index.js']);
+  });
 });
