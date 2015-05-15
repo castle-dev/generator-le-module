@@ -26,11 +26,16 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
   writing: function () {
-    this.fs.copyTpl(
-      this.templatePath('_README.md'),
-      this.destinationPath('README.md'),
-      answers
-    );
+    var writer = this;
+    function copyTemplate (from, to) {
+      writer.fs.copyTpl(
+        writer.templatePath(from),
+        writer.destinationPath(to),
+        answers
+      );
+    };
+    copyTemplate('_README.md', 'README.md');
+    copyTemplate('_CONTRIBUTING.md', 'CONTRIBUTING.md');
   }
 });
  

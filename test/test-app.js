@@ -12,13 +12,10 @@ describe('le-module:app', function () {
       .withPrompts({ someOption: true })
       .on('end', done);
   });
-
-  it('creates files', function () {
-    assert.file([
-      'bower.json',
-      'package.json',
-      '.editorconfig',
-      '.jshintrc'
-    ]);
+  it('creates README.md', function () {
+    assert.file(['README.md']);
+  });
+  it('creates CONTRIBUTING.md', function () {
+    assert.file(['README.md']);
   });
 });
