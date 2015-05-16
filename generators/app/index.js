@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var asciiArt = require('le-ascii-art');
 var path = require('path');
+var q = require('q');
 
 var answers;
 
@@ -53,8 +54,21 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     copyTemplate('test/e2e/_scenario.js', 'test/e2e/scenario.js');
   },
   install: function () {
-    this.npmInstall();
-    this.spawnCommand('git', ['init']);
+    var installer = this;
+    installer.run = function (command, args) {
+      // promisify yeoman's spawnCommand to make chaining easier
+      var deferred = q.defer();
+
+      installer.spawnCommand(command, args).on('close', function () {
+        deferred.resolve();
+      });
+      return deferred.promise;
+    }
+    installer.run('npm', ['install'])
+    .then(function () { return installer.run('git', ['init']); })
+    .then(function () { return installer.run('git', ['add', '.']); })
+    .then(function () { return installer.run('git', ['checkout', '-b', 'develop']); })
+    .then(function () { return installer.run('git', ['commit', '-m', 'chore(init): generated with `yo le-module`']); })
   }
 });
 
