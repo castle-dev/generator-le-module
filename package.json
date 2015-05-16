@@ -1,6 +1,6 @@
 {
   "name": "generator-le-module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generates a solid starting point for new node modules",
   "license": "MIT",
   "main": "app/index.js",
@@ -20,8 +20,9 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.19.0",
     "chalk": "^1.0.0",
+    "le-ascii-art": "^0.1.0",
+    "yeoman-generator": "^0.19.0",
     "yosay": "^1.0.2"
   },
   "devDependencies": {

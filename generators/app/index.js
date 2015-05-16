@@ -1,7 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var yosay = require('yosay');
+var asciiArt = require('le-ascii-art');
 var path = require('path');
 
 var answers;
@@ -57,5 +57,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     this.spawnCommand('git', ['init']);
   }
 });
- 
+
+asciiArt.printLogo();
+
 module.exports = CastleModuleGenerator;
