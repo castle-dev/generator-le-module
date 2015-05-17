@@ -10,12 +10,11 @@ script:
 - gulp docs
 - cd docs
 - git init
-- git remote add origin "https://<%= travisVar %>@github.com/<%= repoName %>.git"
+- git remote add origin "https://<%= travisVariableTemplate %>@github.com/<%= repoName %>.git"
 - git checkout -B gh-pages
 - git add .
 - git commit -m "Updating documentation"
 - git push origin gh-pages -fq > /dev/null
 env:
   global:
-    - secure: <%= travisEncryptedData %>
     - ENVIRONMENT=staging

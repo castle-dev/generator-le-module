@@ -13,6 +13,23 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     var dir = process.cwd().split(path.sep).pop();
     this.prompt([{
       type    : 'input',
+      name    : 'isOpenSource',
+      message : 'Will this module be open-source?',
+      default : 'true'
+    }, {
+      when    : function (resp) { return resp.isOpenSource === 'true' },
+      type    : 'input',
+      name    : 'isTravisSetup',
+      message : 'Have you created the repo and given Travis access?',
+      default : 'true'
+    }, {
+      when    : function (resp) {
+        if (resp.isOpenSource === 'true' && resp.isTravisSetup !== 'true') {
+          console.log(chalk.red('Go setup Travis for this module\'s repo, then come back ;]'));
+          process.exit(0);
+        } else { return true; }
+      },
+      type    : 'input',
       name    : 'moduleName',
       message : 'What is your module\'s name?',
       default : dir // Default to current folder name
@@ -25,6 +42,16 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
       name    : 'repoName',
       message : 'Where will the repo live?',
       default : 'castle-dev/' + dir
+    }, {
+      when    : function (resp) {
+        if (resp.isOpenSource === 'true' && resp.isTravisSetup === 'true') {
+          return true;
+        }
+      },
+      type    : 'input',
+      name    : 'githubToken',
+      message : 'Which GitHub token should Travis use?',
+      required : true
     }], function (responses) {
       answers = responses;
       done();
@@ -33,8 +60,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
   writing: function () {
     var writer = this;
     answers.currentYear = new Date().getFullYear();
-    answers.travisVar = '${GH_TOKEN}';
-    answers.travisEncryptedData = 'mUXdkL/tp2b9Yx78TL5/abmQ7PgiOG4BgOKDifhu0K0rY0UBgD5Jl0eTX3aFxUfRLpgA3/H07D7LBPE3ArsWu6H1ad166SfAMoLvqxaywShoW2cguf+A9BhO7wzwcHJ/Ocboz+kPeIaHKwvFCSbatQHyD2CdAkUdCS+83uiGE9U=';
+    answers.travisVariableTemplate = '${GH_TOKEN}';
     function copyTemplate (from, to) {
       writer.fs.copyTpl(
         writer.templatePath(from),
@@ -47,18 +73,21 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     copyTemplate('_LICENSE-MIT', 'LICENSE-MIT');
     copyTemplate('_package.json', 'package.json');
     copyTemplate('_.gitignore', '.gitignore');
-    copyTemplate('_.travis.yml', '.travis.yml');
     copyTemplate('_gulpfile.js', 'gulpfile.js');
     copyTemplate('src/_index.js', 'src/index.js');
     copyTemplate('test/unit/_index.js', 'test/unit/index.js');
     copyTemplate('test/e2e/_scenario.js', 'test/e2e/scenario.js');
+    if (answers.isOpenSource === 'true' &&
+        answers.isTravisSetup === 'true' &&
+        answers.githubToken) {
+      copyTemplate('_.travis.yml', '.travis.yml');
+    }
   },
   install: function () {
     var installer = this;
     installer.run = function (command, args) {
       // promisify yeoman's spawnCommand to make chaining easier
       var deferred = q.defer();
-
       installer.spawnCommand(command, args).on('close', function () {
         deferred.resolve();
       });
@@ -66,8 +95,13 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
     }
     installer.run('npm', ['install'])
     .then(function () { return installer.run('git', ['init']); })
-    .then(function () { return installer.run('git', ['add', '.']); })
+    .then(function () {
+      if (answers.githubToken) {
+        return installer.run('travis-encrypt', ['--add', '-r', answers.repoName, 'GH_TOKEN=' + answers.githubToken]);
+      }
+    })
     .then(function () { return installer.run('git', ['checkout', '-b', 'develop']); })
+    .then(function () { return installer.run('git', ['add', '.']); })
     .then(function () { return installer.run('git', ['commit', '-m', 'chore(init): generated with `yo le-module`']); })
   }
 });

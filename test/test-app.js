@@ -9,7 +9,14 @@ describe('le-module:generator', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ skipInstall: true })
-      .withPrompts({ someOption: true })
+      .withPrompts({
+        isOpenSoure: 'true',
+        isTravisSetup: 'true',
+        moduleName: 'test',
+        description: 'makes sure stuff works',
+        repoName: 'castle-dev/test',
+        githubToken: 'ABC123'
+      })
       .on('end', done);
   });
   it('creates README.md', function () {
