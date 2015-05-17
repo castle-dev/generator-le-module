@@ -100,6 +100,7 @@ var CastleModuleGenerator = yeoman.generators.Base.extend({
         return installer.run('travis-encrypt', ['--add', '-r', answers.repoName, 'GH_TOKEN=' + answers.githubToken]);
       }
     })
+    .then(function () { return installer.run('git', ['remote', 'add', 'origin', 'ssh://git@github.com/' + answers.repoName]); })
     .then(function () { return installer.run('git', ['checkout', '-b', 'develop']); })
     .then(function () { return installer.run('git', ['add', '.']); })
     .then(function () { return installer.run('git', ['commit', '-m', 'chore(init): generated with `yo le-module`']); })
