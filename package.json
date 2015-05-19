@@ -1,6 +1,6 @@
 {
   "name": "generator-le-module",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "Generates a solid starting point for new node modules",
   "license": "MIT",
   "main": "app/index.js",
