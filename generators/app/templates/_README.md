@@ -1,7 +1,7 @@
 <%= moduleName %>
 =========
 
-**High-level summary goes here**
+**<%= moduleDescription %>**
 
 ## Installation
 
